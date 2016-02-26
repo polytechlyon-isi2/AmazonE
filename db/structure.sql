@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS t_categories;
-DROP TABLE IF EXISTS t_subcategories;
 DROP TABLE IF EXISTS t_items;
+DROP TABLE IF EXISTS t_subcategories;
+DROP TABLE IF EXISTS t_categories;
 
 CREATE TABLE t_categories
 (
@@ -24,7 +24,8 @@ CREATE TABLE t_items
     it_id integer NOT NULL PRIMARY KEY auto_increment,
     it_name varchar(250) NOT NULL,
     it_description varchar(2000) NOT NULL,
-    it_price integer NOT NULL,
+    it_price float NOT NULL,
+    it_image varchar(100) NOT NULL,
     subcat_id integer NOT NULL,
     UNIQUE(it_name),
     CONSTRAINT fk_subcat_id FOREIGN KEY(subcat_id) REFERENCES t_subcategories(subcat_id)
