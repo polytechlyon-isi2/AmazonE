@@ -1,0 +1,22 @@
+body { 
+    padding-top: 50px; 
+}
+
+.footer {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.itemTitle:hover, .itemTitle:focus {
+    text-decoration: none;
+}
+
+#errorPanel {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+.cd_store {
+	margin-top: 25px;
+}
