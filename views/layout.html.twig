@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ app.request.basepath }}/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ app.request.basepath }}/css/amazone.css" rel="stylesheet">
+    <title>AmazonE - {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-target">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('home') }}"><span class="glyphicon glyphicon-cd"></span> AmazonE</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse-target">
+                    <ul class="nav navbar-nav navbar-left">
+                        {% for category in categories %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ category.label }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for subCategory in subCategories %}
+                                    {% if (subCategory.category.id == category.id) %}
+                                    <li><a class="itemTitle" href="{{ path('subCategoryItems', { 'id': subCategory.id }) }}">{{ subCategory.label }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="content">{% block content %}{% endblock %}</div>
+        <footer class="footer">
+            <a href="#">AmazonE</a> est un CMS simpliste basé sur le framework Silex.
+        </footer>
+    </div>
+    
+    <script src="{{ app.request.basepath }}/lib/jquery/jquery.min.js"></script>
+    <script src="{{ app.request.basepath }}/lib/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
