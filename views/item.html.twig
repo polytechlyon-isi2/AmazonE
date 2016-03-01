@@ -1,0 +1,26 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="jumbotron bodyContent">
+    <div class="row">
+        <div class="col-md-5 col-sm-7">
+            <img class="img-responsive images" src="{{ item.image }}" title="{{ item.name }}">
+        </div>
+        <div class="col-md-7 col-sm-5">
+            <h2>
+            	<strong>{{ item.name }}</strong>
+            	<br>
+            	<small>{{ item.subcategory.label }}</small>
+            	<br>
+            	<small>{{ item.price }} euros</small>
+            </h2>
+            <p>{{ item.description }}</p>
+            <a href="/card/add/{{ item.id }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

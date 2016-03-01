@@ -8,15 +8,20 @@ body {
     text-align: center;
 }
 
-.itemTitle:hover, .itemTitle:focus {
-    text-decoration: none;
-}
-
 #errorPanel {
     padding-top: 30px;
     padding-bottom: 10px;
 }
 
-.cd_store {
+.bodyContent {
 	margin-top: 25px;
+}
+
+.images {
+	border-radius: 7px;
+    box-shadow: 1px 1px 10px #555;
+}
+
+.itemTitle:hover, .itemTitle:focus {
+    text-decoration: none;
 }

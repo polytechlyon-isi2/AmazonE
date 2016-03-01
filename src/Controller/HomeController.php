@@ -29,15 +29,15 @@ class HomeController
      * @param Application $app Silex application
      */
     public function subCategoryItemsAction($id, Request $request, Application $app) {
-        $subCategory = $app['dao.subCategory']->find($id);
-        $items = $app['dao.item']->findBySubCategory($id);
         $categories = $app['dao.category']->findAll();
         $subCategories = $app['dao.subCategory']->findAll();
+        $subCategory = $app['dao.subCategory']->find($id);
+        $items = $app['dao.item']->findBySubCategory($id);
         return $app['twig']->render('subCategoryItems.html.twig', array(
-            'subCategory' => $subCategory,
-            'items' => $items,
             'categories' => $categories,
             'subCategories' => $subCategories,
+            'subCategory' => $subCategory,
+            'items' => $items,
             ));
     }
 
@@ -49,13 +49,13 @@ class HomeController
      * @param Application $app Silex application
      */
     public function itemAction($id, Request $request, Application $app) {
-        $item = $app['dao.item']->find($id);
         $categories = $app['dao.category']->findAll();
         $subCategories = $app['dao.subCategory']->findAll();
+        $item = $app['dao.item']->find($id);
         return $app['twig']->render('item.html.twig', array(
-            'item' => $item,
             'categories' => $categories,
             'subCategories' => $subCategories,
+            'item' => $item,
             ));
     }
 }
