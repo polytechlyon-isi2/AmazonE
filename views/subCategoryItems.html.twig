@@ -6,13 +6,18 @@
 <div id="container">
     <h2 class="text-center">{{ subCategory.label }}</h2>
     <div class="row">
-        {% for item in items %}
-        <div class="col-md-2 col-sm-3 col-xs-6">
-            <a href="{{ path('item', { 'id': item.id }) }}" class="thumbnail">
-                <img class="image-responsive" src="{{ item.image }}" title="{{ item.name }}">
-            </a>
-        </div>
-        {% endfor %}
+        {% if items is empty %}
+            <h2 class="text-center">Aucun article n'est disponible dans la catégorie : {{ item.subcategory.label }}</h2>
+        {% else %}
+            {% for item in items %}
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <a href="{{ path('item', { 'id': item.id }) }}" class="thumbnail">
+                    <img class="image-responsive images" src="{{ item.image }}" title="{{ item.name }}">
+                </a>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
     </div>
 </div>
 {% endblock %}
