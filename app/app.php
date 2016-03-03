@@ -35,9 +35,26 @@ $app['twig'] = $app->share($app->extend('twig', function(Twig_Environment $twig,
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
-
-//TODO REGISTER SECURITY
-
+$app->register(new Silex\Provider\SecurityServiceProvider(), array(
+    'security.firewalls' => array(
+        'secured' => array(
+            'pattern' => '^/',
+            'anonymous' => true,
+            'logout' => true,
+            'form' => array('login_path' => '/login', 'check_path' => '/login_check'),
+            'users' => $app->share(function () use ($app) {
+                return new AmazonE\DAO\UserDAO($app['db']);
+            }),
+        ),
+    ),
+    // 'security.role_hierarchy' => array(
+    //     'ROLE_CONNECTED_USER' => array('ROLE_USER'),
+    // ),
+    // 'security.access_rules' => array(
+    //     array('^/card', 'ROLE_CONNECTED_USER'),
+    //     //TODO ADD PERSONAL INFORMATION
+    // ),
+));
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -54,6 +71,9 @@ if (isset($app['debug']) && $app['debug']) {
 }
 
 // Register services
+$app['dao.user'] = $app->share(function ($app) {
+    return new AmazonE\DAO\UserDAO($app['db']);
+});
 $app['dao.category'] = $app->share(function ($app) {
     return new AmazonE\DAO\CategoryDAO($app['db']);
 });
