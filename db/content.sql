@@ -34,3 +34,13 @@ INSERT INTO t_items VALUES (14, "Cowboys", "Dans l'ouest sauvage, mieux vaut gra
 
 INSERT INTO t_items VALUES (15, "Le Bal de l'horreur", "Trois ans après le massacre de sa famille par un dangereux psychopathe, Donna a enfin repris une existence normal et se prépare à vivre la soirée la plus importante de l'année : le bal de promo du lycée. Ce qu'elle ignore, c'est que Richard Fenton, le tueur, s'est échappé de l'asile pour la retrouver. Le détective Winn se lance à sa poursuite pour éviter le pire, mais Fenton a de l'avance. alors que la fête bat son plein, le tueur passe à l'attaque...", 8.53, "http://ecx.images-amazon.com/images/I/51aHlvhIx-L._SY445_.jpg", 8);
 INSERT INTO t_items VALUES (16, "Poltergeist", "Lorsque les Bowen emménagent dans leur nouvelle maison, ils sont rapidement confrontés à des phénomènes étranges. Une présence hante les lieux. Une nuit, leur plus jeune fille, Maddie, disparaît. Pour avoir une chance de la revoir, tous vont devoir mener un combat acharné contre un terrifiant poltergeist...", 14, "http://images4.static-bluray.com/movies/covers/136297_front.jpg", 8);
+
+/* raw password is 'john' */
+insert into t_users values
+(1, 'JohnDoe', '', '%qUgq3NAYfC1MKwrW?yevbE', 'ROLE_USER');
+/* raw password is 'jane' */
+insert into t_users values
+(2, 'JaneDoe', '', '%qUgq3NAYfC1MKwrW?yevbE', 'ROLE_USER');
+/* raw password is '@dm1n' */
+insert into t_users values
+(3, 'admin', '', '%qUgq3NAYfC1MKwrW?yevbE', 'ROLE_ADMIN');

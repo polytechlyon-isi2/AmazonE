@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS t_items;
 DROP TABLE IF EXISTS t_subcategories;
 DROP TABLE IF EXISTS t_categories;
+DROP TABLE IF EXISTS t_users;
 
 CREATE TABLE t_categories
 (
@@ -30,3 +31,12 @@ CREATE TABLE t_items
     UNIQUE(it_name),
     CONSTRAINT fk_subcat_id FOREIGN KEY(subcat_id) REFERENCES t_subcategories(subcat_id)
 ) engine=innodb character SET utf8 collate utf8_unicode_ci;
+
+CREATE TABLE t_users
+(
+    usr_id integer NOT NULL PRIMARY KEY auto_increment,
+    usr_name varchar(50) NOT NULL,
+    usr_password varchar(88) NOT NULL,
+    usr_salt varchar(23) NOT NULL,
+    usr_role varchar(50) NOT NULL 
+) engine=innodb character set utf8 collate utf8_unicode_ci;
