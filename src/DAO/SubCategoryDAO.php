@@ -52,6 +52,26 @@ class SubCategoryDAO extends DAO
     }
 
     /**
+     * Returns a list of all sub categories matching the supplied category id.
+     *
+     * @param integer $id
+     *
+     * @return A list of all sub categories.
+     */
+    public function findByCategory($id) {
+        $sql = "select * from t_subcategories where cat_id=?";
+        $result = $this->getDb()->fetchAll($sql, array($id));
+
+        // Convert query result to an array of domain objects
+        $subCategories = array();
+        foreach ($result as $row) {
+            $subCategoryId = $row['subcat_id'];
+            $subCategories[$subCategoryId] = $this->buildDomainObject($row);
+        }
+        return $subCategories;
+    }
+
+    /**
      * Saves a sub category into the database.
      *
      * @param \AmazonE\Domain\SubCategory $subCategory The sub category to save
