@@ -22,14 +22,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse-target">
                     <ul class="nav navbar-nav navbar-left">
-                        {% for category in categories %}
+                        {% for categoryMenu in categoriesMenus %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ category.label }} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ categoryMenu[0].label }} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                {% for subCategory in subCategories %}
-                                    {% if (subCategory.category.id == category.id) %}
-                                    <li><a class="itemTitle" href="{{ path('subCategoryItems', { 'id': subCategory.id }) }}">{{ subCategory.label }}</a></li>
-                                    {% endif %}
+                                {% for subCategory in categoryMenu[1] %}
+                                <li><a class="itemTitle" href="{{ path('subCategory', { 'id': subCategory.id }) }}">{{ subCategory.label }}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
