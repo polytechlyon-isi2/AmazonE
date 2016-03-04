@@ -11,21 +11,21 @@ use AmazonE\Domain\User;
 class UserDAO extends DAO implements UserProviderInterface
 {
     /**
-     * Returns a list of all users, sorted by role and name.
+     * Returns a list of all users.
      *
      * @return array A list of all users.
      */
     public function findAll() {
-        $sql = "select * from t_users order by usr_role, usr_name";
+        $sql = "select * from t_users";
         $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
-        $entities = array();
+        $users = array();
         foreach ($result as $row) {
             $id = $row['usr_id'];
-            $entities[$id] = $this->buildDomainObject($row);
+            $users[$id] = $this->buildDomainObject($row);
         }
-        return $entities;
+        return $users;
     }
     
     /**
@@ -52,9 +52,14 @@ class UserDAO extends DAO implements UserProviderInterface
      */
     public function save(User $user) {
         $userData = array(
-            'usr_name' => $user->getUsername(),
-            'usr_salt' => $user->getSalt(),
+            'usr_lastname' => $user->getLastname(),
+            'usr_firstname' => $user->getFirstname(),
+            'usr_address' => $user->getAddress(),
+            'usr_zipCode' => $user->getZipCode(),
+            'usr_city' => $user->getCity(),
+            'usr_email' => $user->getEmail(),
             'usr_password' => $user->getPassword(),
+            'usr_salt' => $user->getSalt(),
             'usr_role' => $user->getRole()
             );
 
@@ -84,7 +89,7 @@ class UserDAO extends DAO implements UserProviderInterface
      * {@inheritDoc}
      */
     public function loadUserByUsername($username) {
-        $sql = "select * from t_users where usr_name=?";
+        $sql = "select * from t_users where usr_email=?";
         $row = $this->getDb()->fetchAssoc($sql, array($username));
 
         if ($row)
@@ -120,7 +125,12 @@ class UserDAO extends DAO implements UserProviderInterface
     protected function buildDomainObject($row) {
         $user = new User();
         $user->setId($row['usr_id']);
-        $user->setUsername($row['usr_name']);
+        $user->setLastname($row['usr_lastname']);
+        $user->setFirstname($row['usr_firstname']);
+        $user->setAddress($row['usr_address']);
+        $user->setZipCode($row['usr_zipCode']);
+        $user->setCity($row['usr_city']);
+        $user->setEmail($row['usr_email']);
         $user->setPassword($row['usr_password']);
         $user->setSalt($row['usr_salt']);
         $user->setRole($row['usr_role']);
