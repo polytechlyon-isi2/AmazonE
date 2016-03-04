@@ -47,13 +47,6 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             }),
         ),
     ),
-    // 'security.role_hierarchy' => array(
-    //     'ROLE_CONNECTED_USER' => array('ROLE_USER'),
-    // ),
-    // 'security.access_rules' => array(
-    //     array('^/card', 'ROLE_CONNECTED_USER'),
-    //     //TODO ADD PERSONAL INFORMATION
-    // ),
 ));
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
