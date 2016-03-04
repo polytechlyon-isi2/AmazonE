@@ -35,8 +35,14 @@ CREATE TABLE t_items
 CREATE TABLE t_users
 (
     usr_id integer NOT NULL PRIMARY KEY auto_increment,
-    usr_name varchar(50) NOT NULL,
+    usr_lastname varchar(50) NOT NULL,
+    usr_firstname varchar(50) NOT NULL,
+    usr_address varchar(150) NOT NULL,
+    usr_zipCode varchar(50) NOT NULL,
+    usr_city varchar(50) NOT NULL,
+    usr_email varchar(50) NOT NULL,
     usr_password varchar(88) NOT NULL,
     usr_salt varchar(23) NOT NULL,
-    usr_role varchar(50) NOT NULL 
+    usr_role varchar(50) NOT NULL,
+    UNIQUE(usr_email)
 ) engine=innodb character set utf8 collate utf8_unicode_ci;
