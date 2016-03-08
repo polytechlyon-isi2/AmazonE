@@ -4,26 +4,46 @@
 
 {% block content %}
 <h2 class="text-center">{{ block('title') }}</h2>
+
 {% if error %}
 <div class="alert alert-danger">
-    <strong>Echec de la connexion...</strong> {{ error }}
+    <strong>Echec de la connexion...</strong> Veuillez vérifier vos identifiants de connexion
 </div>
 {% endif %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+<div class="alert alert-danger">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
+{% if form_errors(userForm.password.first) %}
+<div class="alert alert-danger">
+    {{ form_errors(userForm.password.first) }}
+</div>
+{% endif %}
+
 <div class="well">
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
             <ul class="nav nav-tabs nav-justified">
-                <li class="active">
+                <li class="{{ (panelMustBeActive == 'connection' ? "active": "") }}">
                     <a href="#connection" data-toggle="tab" aria-expanded="true">Connexion</a>
                 </li>
-                <li>
+                <li class="{{ (panelMustBeActive == 'inscription' ? "active": "") }}">
                     <a href="#inscription" data-toggle="tab" aria-expanded="false">Inscription</a>
                 </li>
             </ul>
         </div>
     </div>
     <div class="tab-content">
-        <div class="tab-pane fade active in" id="connection">
+        <div class="tab-pane fade {{ (panelMustBeActive == 'connection' ? "active in": "") }}" id="connection">
             <form class="form-signin form-horizontal login" role="form" action="{{ path('login_check') }}" method="post">
                 <div class="form-group">
                     <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
@@ -42,63 +62,68 @@
                 </div>
             </form>
         </div>
-        <div class="tab-pane fade" id="inscription">
-            <form class="form-horizontal login" role="form" name="user" action="" method="post">
-                <input type="hidden" id="user__token" name="user[_token]" value="">
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_lastName">Nom</label>
-                    <div class="col-sm-3">
-                        <input type="text" id="user_lastName" name="user[lastName]" class="form-control" required>
-                    </div>
+        <div class="tab-pane fade {{ (panelMustBeActive == 'inscription' ? "active in": "") }}" id="inscription">
+            {{ form_start(userForm, { 'attr': {'class': 'form-horizontal login'} }) }}
+            <div class="form-group">
+                {{ form_label(userForm.lastname, "Nom", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.lastname) }}
+                    {{ form_widget(userForm.lastname, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_firstName">Prénom</label>
-                    <div class="col-sm-3">
-                        <input type="text" id="user_firstName" name="user[firstName]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.firstname, "Prénom", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.firstname) }}
+                    {{ form_widget(userForm.firstname, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_address">Adresse</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="user_address" name="user[address]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.address, "Adresse", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.address) }}
+                    {{ form_widget(userForm.address, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_zipCode">Code postal</label>
-                    <div class="col-sm-2">
-                        <input type="text" id="user_zipCode" name="user[zipCode]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.zipCode, "Code postal", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.zipCode) }}
+                    {{ form_widget(userForm.zipCode, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_city">Ville</label>
-                    <div class="col-sm-3">
-                        <input type="text" id="user_city" name="user[city]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.city, "Ville", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.city) }}
+                    {{ form_widget(userForm.city, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_mail">Courriel</label>
-                    <div class="col-sm-3">
-                        <input type="email" id="user_mail" name="user[mail]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.email, "Email", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_errors(userForm.email) }}
+                    {{ form_widget(userForm.email, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_password_first">Mot de passe</label>
-                    <div class="col-sm-3">
-                        <input type="password" id="user_password_first" name="user[password][first]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.password.first, "Mot de passe", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_widget(userForm.password.first, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-5 control-label required" for="user_password_second">Mot de passe (confirmation)</label>
-                    <div class="col-sm-3">
-                        <input type="password" id="user_password_second" name="user[password][second]" class="form-control" required>
-                    </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(userForm.password.second, "Mot de passe (confirmation)", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
+                <div class="col-sm-4">
+                    {{ form_widget(userForm.password.second, { 'attr':  { 'class': 'form-control' }}) }}
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-5 col-sm-3">
-                        <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-save"></span> S'inscrire</button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-3">
+                    <input type="submit" class="btn btn-primary" value="Valider" />
                 </div>
-            </form>
+            </div>
+            {{ form_end(userForm) }}
         </div>
     </div>
 </div>
