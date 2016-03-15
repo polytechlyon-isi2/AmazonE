@@ -63,67 +63,7 @@
             </form>
         </div>
         <div class="tab-pane fade {{ (panelMustBeActive == 'inscription' ? "active in": "") }}" id="inscription">
-            {{ form_start(userForm, { 'attr': {'class': 'form-horizontal login'} }) }}
-            <div class="form-group">
-                {{ form_label(userForm.lastname, "Nom", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.lastname) }}
-                    {{ form_widget(userForm.lastname, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.firstname, "Prénom", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.firstname) }}
-                    {{ form_widget(userForm.firstname, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.address, "Adresse", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.address) }}
-                    {{ form_widget(userForm.address, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.zipCode, "Code postal", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.zipCode) }}
-                    {{ form_widget(userForm.zipCode, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.city, "Ville", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.city) }}
-                    {{ form_widget(userForm.city, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.email, "Email", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_errors(userForm.email) }}
-                    {{ form_widget(userForm.email, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.password.first, "Mot de passe", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_widget(userForm.password.first, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(userForm.password.second, "Mot de passe (confirmation)", { 'label_attr':  { 'class': 'col-sm-5 control-label' }}) }}
-                <div class="col-sm-4">
-                    {{ form_widget(userForm.password.second, { 'attr':  { 'class': 'form-control' }}) }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-5 col-sm-3">
-                    <input type="submit" class="btn btn-primary" value="Valider" />
-                </div>
-            </div>
-            {{ form_end(userForm) }}
+            {% include "userPrivateInformationForm.html.twig" %}
         </div>
     </div>
 </div>
