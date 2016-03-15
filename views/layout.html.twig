@@ -40,6 +40,7 @@
                             <span class="glyphicon glyphicon-user"></span> Bienvenue, {{ app.user.username }} <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a href="{{ path('editUser') }}">Informations personnelles</a></li>
                             <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>

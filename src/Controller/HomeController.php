@@ -114,18 +114,31 @@ class HomeController
     /**
      * Edit user controller.
      *
-     * @param integer $id User id
      * @param Request $request Incoming request
      * @param Application $app Silex application
      */
-    public function editUserAction($id, Request $request, Application $app) {
-        $user = $app['dao.user']->find($id);
+    public function editUserAction(Request $request, Application $app) {
+        $user = $app['user'];
         $userForm = $app['form.factory']->create(new UserType(), $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+            // find the default encoder
+            $encoder = $app['security.encoder.digest'];
+            // compute the encoded password
+            $plainPassword = $user->getPassword();
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            $user->setPassword($password);
+            try {
+                // check there is no integrity exception (i.e. duplicate email addresses)
+                $app['dao.user']->save($user);
+                $app['session']->getFlashBag()->add('success', 'Les informations personnelles ont été mises à jour avec succès !');
+            } catch (DBALException $e) {
+                $app['session']->getFlashBag()->add('error', 'L\'adresse email est déjà existante...');
+            }
         }
-        return $app['twig']->render('user_form.html.twig', array(
-            'title' => 'Edit user',
-            'userForm' => $userForm->createView()));
+        return $app['twig']->render('userPrivateInformation.html.twig', array(
+            'categoriesMenus' => $this->getCategoriesMenus($app),
+            'userForm' => $userForm->createView(),
+            'error' => $app['security.last_error']($request)));
     }
 }
