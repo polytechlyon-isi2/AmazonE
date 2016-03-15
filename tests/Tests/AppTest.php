@@ -54,7 +54,9 @@ class AppTest extends WebTestCase
         return array(
             array('/'),
             array('/subCategory/1'),
-            array('/item/1')
+            array('/item/1'),
+            array('/login'),
+            array('/logout')
         );
     }
 }
