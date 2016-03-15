@@ -55,9 +55,14 @@ class AnonymousTest extends WebTestCase{
     public function provideCategories(){
         $app = $this->createApplication();
         $homeController = new HomeController();
-        $categoriesMenu = $homeController->getCategoriesMenus($app);
+        $categoriesMenus = array();
+        $categories = $app['dao.category']->findAll();
+        foreach ($categories as $category) {
+            $subCategories = $app['dao.subCategory']->findByCategory($category->getId());
+            $categoriesMenus[] = array($category, $subCategories);
+        }
         $subCategories = array();
-        for ($i = 1; $i <= count($categoriesMenu); $i++) {
+        for ($i = 1; $i <= count($categoriesMenus); $i++) {
             $subCategories[$i] = array($i);
         }
         return $subCategories;
