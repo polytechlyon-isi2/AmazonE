@@ -13,4 +13,4 @@ $app->match('/item/{id}', "AmazonE\Controller\HomeController::itemAction")->bind
 $app->match('/login', "AmazonE\Controller\HomeController::loginAction")->bind('login');
 
 // Edit a user
-//$app->match('/user/edit/{id}', "AmazonE\Controller\HomeController::editUserAction")->bind('editUser');
+$app->match('/user/edit', "AmazonE\Controller\HomeController::editUserAction")->bind('editUser');
