@@ -7,9 +7,12 @@ require_once __DIR__.'/../../vendor/autoload.php';
 
 use Silex\WebTestCase;
 use AmazonE\Controller\HomeController;
+use AmazonE\DAO;
 
 class AnonymousTest extends WebTestCase{
 
+    protected $client;
+    protected $app;
     /**
      * @dataProvider provideCategories
      */
@@ -19,6 +22,14 @@ class AnonymousTest extends WebTestCase{
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
+    /**
+     * @dataProvider provideItems
+     */
+    public function testItemExists($item){
+        $client = $this->createClient();
+        $client->request('GET', '/item/'.$item);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
 
     /**
      * {@inheritDoc}
@@ -51,6 +62,23 @@ class AnonymousTest extends WebTestCase{
         }
         return $subCategories;
     }
+
+    public function provideItems(){
+        $app = $this->createApplication();
+        $categoryDAO = new DAO\CategoryDAO($app['db']);
+        $subCategoryDAO = new DAO\SubCategoryDAO($app['db']);
+        $subCategoryDAO->setCategoryDAO($categoryDAO);
+        $itemDAO = new DAO\ItemDAO($app['db']);
+        $itemDAO->setSubCategoryDAO($subCategoryDAO);
+        $items = $itemDAO->findAll();
+
+        $itemList = array();
+        for ($j = 1; $j <= count($items); $j++){
+            $itemList[$j] = array($items[$j]->getId());
+        }
+        return $itemList;
+    }
+
 
 
 }
