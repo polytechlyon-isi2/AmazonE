@@ -10,4 +10,7 @@ $app->match('/subCategory/{id}', "AmazonE\Controller\HomeController::subCategory
 $app->match('/item/{id}', "AmazonE\Controller\HomeController::itemAction")->bind('item');
 
 // Login form
-$app->get('/login', "AmazonE\Controller\HomeController::loginAction")->bind('login');
+$app->match('/login', "AmazonE\Controller\HomeController::loginAction")->bind('login');
+
+// Edit a user
+//$app->match('/user/edit/{id}', "AmazonE\Controller\HomeController::editUserAction")->bind('editUser');
