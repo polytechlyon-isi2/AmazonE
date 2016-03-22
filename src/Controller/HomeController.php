@@ -141,4 +141,30 @@ class HomeController
             'userForm' => $userForm->createView(),
             'error' => $app['security.last_error']($request)));
     }
+
+    /**
+     * Listed cart items controller.
+     *
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
+    public function cartAction(Request $request, Application $app) {
+        // TO FINISH
+    }
+
+    /**
+     * Add an article controller.
+     *
+     * @param integer $id Item id
+     * @param Request $request Incoming request
+     * @param Application $app Silex application
+     */
+    public function addArticleAction($id, Request $request, Application $app) {
+        if (!isset($app["session.cart"])) {
+            $app["session.cart"] = array();
+        }
+        $quantity = (isset($app["session.cart"][$id]) ? $app["session.cart"][$id] : 0) + 1;
+        $app["session.cart"][$id] = $quantity;
+        return $this->cartAction($request, $app);
+    }
 }

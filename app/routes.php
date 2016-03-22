@@ -14,3 +14,9 @@ $app->match('/login', "AmazonE\Controller\HomeController::loginAction")->bind('l
 
 // Edit a user
 $app->match('/user/edit', "AmazonE\Controller\HomeController::editUserAction")->bind('editUser');
+
+// Listed all article
+$app->match('/cart', "AmazonE\Controller\HomeController::cartAction")->bind('cartAction');
+
+// Add an article
+$app->match('/cart/add/{id}', "AmazonE\Controller\HomeController::addArticleAction")->bind('addArticle');
