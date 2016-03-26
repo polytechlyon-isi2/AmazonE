@@ -1,0 +1,45 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Panier{% endblock %}
+
+{% block content %}
+    <div id="content">
+        {% if itemsWithQuantity is empty %}
+            <h2 class="text-center">Votre panier est vide.</h2>
+        {% else %}
+            <h2 class="text-center">Contenu de votre panier</h2>
+            <div class="table-responsive">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Titre de l'album</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set sum = 0 %}
+                    {% for index in itemsWithQuantity %}
+                        <tr>
+                            <td><a href="{{ path('item', { 'id': index[0].id }) }}">{{ index[0].name }}</a></td>
+                            <td>{{ index[1] }}</td>
+                            <td>{{ index[0].price }}</td>
+                            {% set totalprice = index[0].price * index[1] %}
+                            {% set sum = sum + totalprice %}
+                            <td>{{ totalprice }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>{{ sum }}</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
