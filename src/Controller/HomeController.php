@@ -149,7 +149,18 @@ class HomeController
      * @param Application $app Silex application
      */
     public function cartAction(Request $request, Application $app) {
-        // TO FINISH
+        $itemsWithQuantity = array();
+        $cart = $app['session']->get('cart');
+        if (isset($cart)) {
+            foreach ($cart as $itemId => $itemQuantity) {
+                $item = $app['dao.item']->find($itemId);
+                $itemsWithQuantity[] = array($item, $itemQuantity);
+            }
+        }
+        return $app['twig']->render('cart.html.twig', array(
+            'categoriesMenus' => $this->getCategoriesMenus($app),
+            'itemsWithQuantity' => $itemsWithQuantity,
+            ));
     }
 
     /**
@@ -160,11 +171,12 @@ class HomeController
      * @param Application $app Silex application
      */
     public function addArticleAction($id, Request $request, Application $app) {
-        if (!isset($app["session.cart"])) {
-            $app["session.cart"] = array();
+        $articles = $app["session"]->get('cart');
+        if (!isset($articles)) {
+            $articles = array();
         }
-        $quantity = (isset($app["session.cart"][$id]) ? $app["session.cart"][$id] : 0) + 1;
-        $app["session.cart"][$id] = $quantity;
+        $articles[$id] = (isset($articles[$id]) ? $articles[$id] : 0) + 1;
+        $app["session"]->set('cart', $articles);
         return $this->cartAction($request, $app);
     }
 }
