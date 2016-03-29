@@ -47,6 +47,10 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
             }),
         ),
     ),
+    'security.access_rules' => array(
+        array('^/user', 'ROLE_USER'),
+        array('^/cart', 'ROLE_USER'),
+    ),
 ));
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
