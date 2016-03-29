@@ -92,9 +92,9 @@ class HomeController
                 $plainPassword = $user->getPassword();
                 $password = $encoder->encodePassword($plainPassword, $user->getSalt());
                 $user->setPassword($password);
-                $user->setRole('CONNECTED');
+                $user->setRole('ROLE_USER');
                 try {
-                    // check there is no integrity exception (i.e. duplicate email addresses)
+                    // check there is no integrity exception (i.e. duplicate emails addresses)
                     $app['dao.user']->save($user);
                     $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été ajouté avec succès !');
                 } catch (DBALException $e) {
@@ -149,17 +149,20 @@ class HomeController
      * @param Application $app Silex application
      */
     public function cartAction(Request $request, Application $app) {
+        $totalPrice = 0;
         $itemsWithQuantity = array();
         $cart = $app['session']->get('cart');
         if (isset($cart)) {
             foreach ($cart as $itemId => $itemQuantity) {
                 $item = $app['dao.item']->find($itemId);
                 $itemsWithQuantity[] = array($item, $itemQuantity);
+                $totalPrice = $totalPrice + ($item->getPrice() * $itemQuantity);
             }
         }
         return $app['twig']->render('cart.html.twig', array(
             'categoriesMenus' => $this->getCategoriesMenus($app),
             'itemsWithQuantity' => $itemsWithQuantity,
+            'totalPrice' => $totalPrice,
             ));
     }
 
