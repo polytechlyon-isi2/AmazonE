@@ -16,7 +16,7 @@ class HomeController
      *
      * @param Application $app Silex application
      */
-    private function getCategoriesMenus(Application $app) {
+    public function getCategoriesMenus(Application $app) {
         $categoriesMenus = array();
         $categories = $app['dao.category']->findAll();
         foreach ($categories as $category) {
