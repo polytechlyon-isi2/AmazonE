@@ -9,19 +9,22 @@ ErrorHandler::register();
 ExceptionHandler::register();
 
 // Register error handler
-// $app->error(function (\Exception $e, $code) use ($app) {
-//     switch ($code) {
-//         case 403:
-//             $message = 'Accès refusé.';
-//             break;
-//         case 404:
-//             $message = 'La ressource demandée n\'a pas pu être trouvée.';
-//             break;
-//         default:
-//             $message = "Quelque chose s'est mal passé...";
-//     }
-//     return $app['twig']->render('error.html.twig', array('message' => $message));
-// });
+$app->error(function (\Exception $e, $code) use ($app) {
+    switch ($code) {
+        case 403:
+            $message = 'Accès refusé.';
+            break;
+        case 404:
+            $message = 'La ressource demandée n\'a pas pu être trouvée.';
+            break;
+        default:
+            $message = "Quelque chose s'est mal passé...";
+    }
+    return $app['twig']->render('error.html.twig', array(
+        'message' => $message,
+        'categoriesMenus' => AmazonE\Controller\HomeController::getCategoriesMenus($app),
+    ));
+});
 
 // Register service providers
 $app->register(new Silex\Provider\DoctrineServiceProvider());
